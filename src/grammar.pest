@@ -1,0 +1,7 @@
+WHITESPACE = _{ " " | "\t" }
+digit = _{ ASCII_DIGIT }
+number = { ("-"? ~ digit+ ~ ("." ~ digit+)?) }
+term = {number? ~ "x" ~ ("^2")? | number}
+sign = _{ "+" | "-" }
+equation = { term ~ (sign ~ term)* ~ "=" ~ "0" }
+file = { SOI ~ (equation ~ ("\r\n" | "\n")?)* ~ EOI }
