@@ -44,7 +44,7 @@ And also it includes a Makefile with convenient commands for development and tes
    git clone <repository_url>
    cd quadratic_equation_parser
    cargo build
-    ```
+  ```
 2. Open the project folder in your terminal.
 3. Run one of the available commands (use `cargo run -- help` if you lost).
 4. To run tests:
