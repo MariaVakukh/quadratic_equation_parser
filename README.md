@@ -28,7 +28,7 @@ And also it includes a Makefile with convenient commands for development and tes
 | Command | Description |
 |---------|-------------|
 | `make run` | Run the program with equation.txt file |
-| `make interactive` | Run in interactive mode |
+| `make input` | Run in interactive mode |
 | `make test` | Run all tests |
 | `make fmt` | Format the code using rustfmt |
 | `make clippy` | Run clippy for code linting |
@@ -44,7 +44,7 @@ And also it includes a Makefile with convenient commands for development and tes
    git clone <repository_url>
    cd quadratic_equation_parser
    cargo build
-    ```
+  ```
 2. Open the project folder in your terminal.
 3. Run one of the available commands (use `cargo run -- help` if you lost).
 4. To run tests:
