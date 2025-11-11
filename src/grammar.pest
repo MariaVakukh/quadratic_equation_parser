@@ -1,7 +1,16 @@
 WHITESPACE = _{ " " | "\t" }
-digit = _{ ASCII_DIGIT }
-number = { ("-"? ~ digit+ ~ ("." ~ digit+)?) }
-term = {number? ~ "x" ~ ("^2")? | number}
-sign = _{ "+" | "-" }
-equation = { term ~ (sign ~ term)* ~ "=" ~ "0" }
-file = { SOI ~ (equation ~ ("\r\n" | "\n")?)* ~ EOI }
+sign = { "+" | "-" }
+
+number = @{ "-"? ~ (ASCII_DIGIT+ ~ ("." ~ ASCII_DIGIT+)? 
+| "." ~ ASCII_DIGIT+) ~ !(ASCII_ALPHANUMERIC | "." | "-" | "+") }
+
+quad_term = { sign? ~ WHITESPACE* ~ (number ~ "*" ~ "x^2" | "x^2") }
+linear_term = { sign? ~ WHITESPACE* ~ (number ~ "*" ~ "x" | "x") ~ !"^" }
+
+constant_term = { sign? ~ WHITESPACE* ~ number ~ !( "*" | "x" ) }  
+
+term = { quad_term | linear_term | constant_term }
+expression = { term+ }
+equation = { expression ~ WHITESPACE* ~ "=" ~ WHITESPACE* ~ "0" }
+file = { SOI ~ (equation ~ ("\n" | "\r\n"))* ~ equation? ~ EOI }
+

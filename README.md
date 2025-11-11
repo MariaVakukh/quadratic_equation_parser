@@ -17,8 +17,13 @@ This project functions as a full-featured command-line application.
 | Command | Description | 
 |---------|-------------|
 | `cargo run -- input`| Interactive mode for your equation input |
+<<<<<<< HEAD
 | `cargo run -- parse equations.txt` | Batch process equations from a text file |  
 | `cargo run -- help` | Display usage instructions and examples |  
+=======
+| `cargo run -- parse equations.txt` | Parse and calculate equations from a text file |  
+| `cargo run -- help` | Display instructions |  
+>>>>>>> cd39223 (update parser)
 | `cargo run -- credits` | Show project information and author |  
 
 And also it includes a Makefile with convenient commands for development and testing.
@@ -44,14 +49,24 @@ And also it includes a Makefile with convenient commands for development and tes
    git clone <repository_url>
    cd quadratic_equation_parser
    cargo build
+<<<<<<< HEAD
   ```
 2. Open the project folder in your terminal.
 3. Run one of the available commands (use `cargo run -- help` if you lost).
 4. To run tests:
    cargo test
+=======
+    ```
+2. Open the project folder in your terminal.
+3. Run one of the available commands (use `cargo run -- help` if you lost).
+4. To run tests:
+```
+   cargo test
+```
+>>>>>>> cd39223 (update parser)
 
 # Example
-
+You can create a text file (our use file `equation.txt`) to full it with multiple equations and parse them all at once!
 **Input:**
 ```
 x^2 - 5x + 6 = 0
