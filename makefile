@@ -9,7 +9,7 @@ all: fmt clippy test run
 help:
 	@echo "Makefile commands:"
 	@echo "  make run 				     - run the program with equation.txt file"
-	@echo "  make interactive            - interactive mode"
+	@echo "  make input            - interactive mode"
 	@echo "  make test                   - run all tests"
 	@echo "  make fmt                    - format the code"
 	@echo "  make clippy                 - run clippy for code linting"
