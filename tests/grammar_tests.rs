@@ -23,6 +23,27 @@ fn test_number_fail() {
 }
 
 #[test]
+fn test_fraction() -> anyhow::Result<()> {
+    let valid = ["1/2", "-3/4", ".5/3"];
+    for input in valid {
+        let pair = Grammar::parse(Rule::fraction, input)?
+            .next()
+            .ok_or_else(|| anyhow!("no pair!"))?;
+        assert_eq!(pair.as_str(), input);
+    }
+    Ok(())
+}
+
+#[test]
+fn test_fraction_fail() -> anyhow::Result<()> {
+    let invalid = ["1//2", "3/0.5", "4/-2", "--1/2"];
+    for input in invalid {
+        assert!(Grammar::parse(Rule::fraction, input).is_err());
+    }
+    Ok(())
+}
+
+#[test]
 fn test_quad_term() -> anyhow::Result<()> {
     let valid = [
         "x^2",
@@ -39,6 +60,37 @@ fn test_quad_term() -> anyhow::Result<()> {
             .next()
             .ok_or_else(|| anyhow!("no pair!"))?;
         assert_eq!(pair.as_str().replace(" ", ""), input.replace(" ", ""));
+    }
+    Ok(())
+}
+
+#[test]
+fn test_grouped_term() -> anyhow::Result<()> {
+    let valid = [
+        "(x+1)=0",
+        "(x - 2*x + 3)=0",
+        "(-3*x + 1)=0",
+        "( 2*x - 5 ) = 0",
+    ];
+    for input in valid {
+        let pair = Grammar::parse(Rule::equation, input)?
+            .next()
+            .ok_or_else(|| anyhow!("no pair!"))?;
+        assert_eq!(pair.as_str().replace(" ", ""), input.replace(" ", ""));
+    }
+    Ok(())
+}
+
+#[test]
+fn test_grouped_term_fail() -> anyhow::Result<()> {
+    let invalid = [
+        "(x+1^2=0", 
+        "x+1)^2=0",  
+        "((x+1)*x^2=0", 
+        "(x+1))^2=0",
+    ];
+    for input in invalid {
+        assert!(Grammar::parse(Rule::equation, input).is_err());
     }
     Ok(())
 }

@@ -1,15 +1,20 @@
 WHITESPACE = _{ " " | "\t" }
 sign = { "+" | "-" }
-
-number = @{ "-"? ~ (ASCII_DIGIT+ ~ ("." ~ ASCII_DIGIT+)? 
-| "." ~ ASCII_DIGIT+) ~ !(ASCII_ALPHANUMERIC | "." | "-" | "+") }
-
-quad_term = { sign? ~ WHITESPACE* ~ (number ~ "*" ~ "x^2" | "x^2") }
-linear_term = { sign? ~ WHITESPACE* ~ (number ~ "*" ~ "x" | "x") ~ !"^" }
-
-constant_term = { sign? ~ WHITESPACE* ~ number ~ !( "*" | "x" ) }  
-
-term = { quad_term | linear_term | constant_term }
+number = @{ 
+    "-"? ~ (ASCII_DIGIT+ ~ ("." ~ ASCII_DIGIT+)? | "." ~ ASCII_DIGIT+ )
+    ~ !(ASCII_ALPHANUMERIC | "." | "-" | "+")
+}
+fraction = @{
+    "-"? ~ ((ASCII_DIGIT+ ~ "/" ~ ASCII_DIGIT+)    
+        | ("." ~ ASCII_DIGIT+ ~ "/" ~ ASCII_DIGIT+) 
+    ) ~ !(ASCII_ALPHANUMERIC | "." | "-" | "+")
+}
+coefficient = { number | fraction }
+quad_term = { sign? ~ WHITESPACE* ~ (coefficient ~ WHITESPACE* ~ "*" ~ WHITESPACE* ~ "x^2" | "x^2") }
+linear_term = { sign? ~ WHITESPACE* ~ (coefficient ~ WHITESPACE* ~ "*" ~ WHITESPACE* ~ "x" | "x") ~ !"^" }
+constant_term = { sign? ~ WHITESPACE* ~ coefficient ~ !( "*" | "x" ) }
+grouped_term = { "(" ~ WHITESPACE* ~ expression ~ WHITESPACE* ~ ")" }
+term = { quad_term | linear_term | constant_term | grouped_term }
 expression = { term+ }
 equation = { expression ~ WHITESPACE* ~ "=" ~ WHITESPACE* ~ "0" }
 file = { SOI ~ (equation ~ ("\n" | "\r\n"))* ~ equation? ~ EOI }
